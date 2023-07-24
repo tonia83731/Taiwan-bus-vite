@@ -5,7 +5,7 @@ import Keyboard from "../components/Keyboard";
 
 import { Link } from "react-router-dom";
 
-export default function BustListPage() {
+export default function BusListPage() {
   return (
     <div className="">
       <div className="flex-1 box-border">

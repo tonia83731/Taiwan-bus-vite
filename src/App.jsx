@@ -2,7 +2,10 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from './pages/HomePage';
-import BustListPage from './pages/BustListPage';
+import BusListPage from './pages/BusListPage';
+import BusInfoPage from './pages/BusInfoPage';
+import RouteInfoPage from './pages/RouteInfoPage';
+import RouteMapPage from './pages/RouteMapPage';
 
 
 function App() {
@@ -13,7 +16,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/bus" element={<BustListPage />}/>
+            <Route path="/bus" element={<BusListPage />} />
+            <Route path="/info" element={<BusInfoPage />} />
+            <Route path="/route-info" element={<RouteInfoPage />} />
+            <Route path="/map" element={<RouteMapPage />} />
           </Routes>
         </BrowserRouter>
       </div>
