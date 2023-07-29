@@ -37,19 +37,20 @@ const newTaipeiBtn = [
   },
 ];
 
-export default function NewTaipeiKeyboard() {
+export default function NewTaipeiKeyboard({onWordKeyClick}) {
   const newTaipeiBtnGrid = newTaipeiBtn.map((btn) => {
     return (
       <input
         type="button"
         key={btn.id}
         id={btn.name}
-        value={btn.name}
+        value={btn.id}
         className={`w-full h-full rounded bg-white-80 ${
           btn.textColor || "text-black-80"
         } drop-shadow-md cursor-pointer hover:bg-white-100 text-sm ${
           btn.gridSpan || ""
         }`}
+        onClick={onWordKeyClick}
       />
     );
   });

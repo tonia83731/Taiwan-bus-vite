@@ -5,18 +5,18 @@ import TaichungKeyboard from "./OtherKeyboard/TaichungKeyboard";
 import TainanKeyboard from "./OtherKeyboard/TainanKeyboard";
 import KaohsiungKeyboard from "./OtherKeyboard/KaohsiungKeyboard";
 
-export default function Keyboard() {
+export default function Keyboard({onNumKeyClick, onWordKeyClick}) {
   return (
     <form action="" className="grid gap-4 grid-cols-5 h-[140px]">
       <div className="col-span-2">
-        <TaipeiKeyboard />
-        {/* <NewTaipeiKeyboard /> */}
-        {/* <TaichungKeyboard/> */}
-        {/* <TainanKeyboard /> */}
-        {/* <KaohsiungKeyboard/> */}
+        <TaipeiKeyboard onWordKeyClick={onWordKeyClick} />
+        {/* <NewTaipeiKeyboard onWordKeyClick={onWordKeyClick}/> */}
+        {/* <TaichungKeyboard onWordKeyClick={onWordKeyClick}/> */}
+        {/* <TainanKeyboard onWordKeyClick={onWordKeyClick}/> */}
+        {/* <KaohsiungKeyboard onWordKeyClick={onWordKeyClick}/> */}
       </div>
       <div className="col-start-3 col-span-3">
-        <NumberKeyboard />
+        <NumberKeyboard onNumKeyClick={onNumKeyClick} onWordKeyClick />
       </div>
     </form>
   );

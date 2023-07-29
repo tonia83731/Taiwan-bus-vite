@@ -1,7 +1,7 @@
 
 const numBtn = [1, 2, 3, 4, 5, 6, 7, 8, 9, "其他", 0, "清除"]
 
-export default function NumberKeyboard(){
+export default function NumberKeyboard({onNumKeyClick}){
   const numBtnGrid = numBtn.map((btn) => {
     return (
       <input
@@ -10,6 +10,7 @@ export default function NumberKeyboard(){
         id={btn}
         value={btn}
         className="w-full h-full rounded bg-white-80 text-black-80 drop-shadow-md cursor-pointer hover:bg-white-100 text-sm"
+        onClick={onNumKeyClick}
       />
     );
   })

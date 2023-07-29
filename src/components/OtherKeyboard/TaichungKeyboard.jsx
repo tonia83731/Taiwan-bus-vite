@@ -13,15 +13,16 @@ const taichungBtn = [
 ];
 
 
-export default function TaichungKeyboard(){
+export default function TaichungKeyboard({onWordKeyClick}){
   const taichungBtnGrid = taichungBtn.map((btn) => {
     return (
       <input
         type="button"
         key={btn.id}
         id={btn.id}
-        value={btn.name}
+        value={btn.id}
         className={`w-full h-full rounded bg-white-80 ${btn.textColor} drop-shadow-md cursor-pointer hover:bg-white-100 text-sm`}
+        onClick={onWordKeyClick}
       />
     );
   })

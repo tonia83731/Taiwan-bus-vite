@@ -4,8 +4,25 @@ import BusList from "../components/BusList";
 import Keyboard from "../components/Keyboard";
 
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function BusListPage() {
+  const [inputValue, setInputValue] = useState("")
+
+  const handleNumKeyClick = (e) => {
+    const value = e.target.value
+    if(value !== "其他" && value !== "清除"){
+      setInputValue((prev) => prev + value);
+    } else if (value === "清除"){
+      setInputValue("")
+    }
+  }
+  const handleWordKeyClick = (e) => {
+    console.log(e.target.value)
+    const value = e.target.value;
+    setInputValue((prev) => prev + value)
+  }
+
   return (
     <div className="">
       <div className="flex-1 box-border">
@@ -20,11 +37,11 @@ export default function BusListPage() {
           </div>
         </Header>
         <MainArea height="h-[calc(100vh-172px)]">
-          <BusList />
+          <BusList inputValue={inputValue}/>
         </MainArea>
       </div>
       <div className="bg-light-biege px-2 py-4 z-[100]">
-        <Keyboard />
+        <Keyboard onNumKeyClick={handleNumKeyClick} onWordKeyClick={handleWordKeyClick}/>
       </div>
     </div>
   );

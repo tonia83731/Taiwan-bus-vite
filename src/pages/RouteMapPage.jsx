@@ -1,9 +1,15 @@
-import Header from "../components/Header"
+import Header from "../components/Header";
+import MainArea from "../components/MainArea";
 
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { loadGoogleMapsAPI } from "google-maps-api-loader";
 
-
-export default function RouteMapPage(){
+export default function RouteMapPage() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
   return (
     <div className="">
       <Header>
@@ -17,7 +23,27 @@ export default function RouteMapPage(){
         </div>
       </Header>
       {/* Google Map Here */}
-      
+      <MainArea>{isLoaded ? <Map /> : <div>Loading...</div>}</MainArea>
     </div>
+  );
+}
+
+function Map() {
+  const center = useMemo(() => ({
+    lat: 25.033671,
+    lng: 121.564427,
+  }));
+
+  return (
+    <GoogleMap
+      zoom={15}
+      center={center}
+      mapContainerClassName="w-full h-[calc(100vh-45px)]"
+    >
+      <MarkerF position={{
+        lat: 25.033671,
+        lng: 121.564427,
+      }}/>
+    </GoogleMap>
   );
 }

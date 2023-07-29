@@ -41,19 +41,20 @@ const tainanBtn = [
   },
 ];
 
-export default function TainanKeyboard() {
+export default function TainanKeyboard({onWordKeyClick}) {
   const tainanBtnGrid = tainanBtn.map((btn) => {
     return (
       <input
         type="button"
         key={btn.id}
         id={btn.id}
-        value={btn.name}
+        value={btn.id}
         className={`w-full h-full rounded bg-white-80 ${
           btn.textColor || "text-black-80"
         } drop-shadow-md cursor-pointer hover:bg-white-100 text-sm ${
           btn.gridSpan || ""
         }`}
+        onClick={onWordKeyClick}
       />
     );
   });

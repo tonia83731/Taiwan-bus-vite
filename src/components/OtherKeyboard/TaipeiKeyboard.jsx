@@ -54,7 +54,7 @@ const moreBtn = [
   },
 ];
 
-export default function TaipeiKeyboard() {
+export default function TaipeiKeyboard({onWordKeyClick}) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOptionsClick = (e) => {
@@ -73,6 +73,7 @@ export default function TaipeiKeyboard() {
         } drop-shadow-md cursor-pointer hover:bg-white-100 text-sm ${
           btn.gridSpan || ""
         }`}
+        onClick={onWordKeyClick}
       />
     );
   });
