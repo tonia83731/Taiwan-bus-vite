@@ -15,8 +15,8 @@ function App() {
       <div id="App" className="w-full h-full">
         <BrowserRouter>
           <Routes>
-            <Route index element={<HomePage />} />
-            <Route path="/bus" element={<BusListPage />} />
+            <Route path="*" element={<HomePage />} />
+            <Route path="/list/:name" element={<BusListPage />} />
             <Route path="/info" element={<BusInfoPage />} />
             <Route path="/route-info" element={<RouteInfoPage />} />
             <Route path="/map" element={<RouteMapPage />} />

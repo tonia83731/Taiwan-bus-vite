@@ -31,7 +31,7 @@ const KaohsiungSVG = styled(Kaohsiung)`
 const BtnData = [
   {
     id: 1,
-    linkTo: "",
+    linkTo: "Taipei",
     icon: <TaipeiSVG />,
     name: "台北等公車",
     color: "bg-red-80",
@@ -39,7 +39,7 @@ const BtnData = [
   },
   {
     id: 2,
-    linkTo: "",
+    linkTo: "NewTaipei",
     icon: <NewTaipeiSVG />,
     name: "新北等公車",
     color: "bg-orange-80",
@@ -47,7 +47,7 @@ const BtnData = [
   },
   {
     id: 3,
-    linkTo: "",
+    linkTo: "Taichung",
     icon: <TaichungSVG />,
     name: "台中等公車",
     color: "bg-yellow-80",
@@ -55,7 +55,7 @@ const BtnData = [
   },
   {
     id: 4,
-    linkTo: "",
+    linkTo: "Tainan",
     icon: <TainanSVG />,
     name: "台南等公車",
     color: "bg-brown-80",
@@ -63,7 +63,7 @@ const BtnData = [
   },
   {
     id: 5,
-    linkTo: "",
+    linkTo: "Kaohsiung",
     icon: <KaohsiungSVG />,
     name: "高雄等公車",
     color: "bg-gold-80",
@@ -75,7 +75,7 @@ export default function HomeLink() {
   const BtnDataList = BtnData.map((btn) => {
     return (
       <Link
-        to={btn.linkTo}
+        to={`/list/${btn.linkTo}`}
         className={`flex justify-center items-center ${btn.color} block w-full min-h-[45px] rounded py-2 text-center drop-shadow-md hover:${btn.color_hover} hover:font-bold`}
       >
         <span>{btn.icon}</span>

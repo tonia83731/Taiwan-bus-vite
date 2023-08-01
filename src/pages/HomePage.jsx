@@ -11,26 +11,26 @@ import { useEffect } from "react";
 import { getBusCity, getBusRoute } from "../api/getBusRoute";
 
 export default function HomePage() {
-  useEffect(() => {
-    const getBusCityAsync = async () => {
-      try {
-        const busCity = await getBusCity();
-        // console.log(busCity);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const getBusRouteAsync = async () => {
-      try {
-        const busRoutes = await getBusRoute();
-        console.log(busRoutes);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getBusCityAsync();
-    getBusRouteAsync();
-  }, []);
+  // useEffect(() => {
+  //   const getBusCityAsync = async () => {
+  //     try {
+  //       const busCity = await getBusCity('Taipei');
+  //       console.log(busCity);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   const getBusRouteAsync = async () => {
+  //     try {
+  //       const busRoutes = await getBusRoute();
+  //       // console.log(busRoutes);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getBusCityAsync();
+  //   getBusRouteAsync();
+  // }, []);
 
   return (
     <div className="">

@@ -1,10 +1,11 @@
 import axios from "axios";
 import getAuthorizationHeader from "./getAuthorizationHeader1";
 
-const baseUrl = "https://ptx.transportdata.tw/MOTC";
+const baseUrl = "https://tdx.transportdata.tw/api/basic";
 const routeUrl = "v2/Bus/Route/City";
 const formatUrl = "?&$format=JSON";
 
+// 取得市區所有公車路線
 export const getBusCity = async (city) => {
   try {
     const res = await axios.get(`${baseUrl}/${routeUrl}/${city}${formatUrl}`, {
@@ -16,6 +17,7 @@ export const getBusCity = async (city) => {
   }
 };
 
+// 取得路線資訊(營運業者、車牌號碼、票價)
 export const getBusRoute = async (city, route) => {
   try {
     const res = await axios.get(`${baseUrl}/${routeUrl}/${city}/${route}${formatUrl}`, {
