@@ -1,4 +1,3 @@
-
 import { styled } from "styled-components";
 
 import MainArea from "../components/MainArea";
@@ -8,17 +7,31 @@ import Footer from "../components/Footer";
 
 import { ReactComponent as BusIcon } from "../assets/BusIcon.svg";
 
-const BusSVG = styled(BusIcon)`
-  width: auto;
-  height: 1.2em;
-  path {
-    fill: #fefefe;
-  }
-`;
-
-
+import { useEffect } from "react";
+import { getBusCity, getBusRoute } from "../api/getBusRoute";
 
 export default function HomePage() {
+  useEffect(() => {
+    const getBusCityAsync = async () => {
+      try {
+        const busCity = await getBusCity();
+        // console.log(busCity);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const getBusRouteAsync = async () => {
+      try {
+        const busRoutes = await getBusRoute();
+        console.log(busRoutes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getBusCityAsync();
+    getBusRouteAsync();
+  }, []);
+
   return (
     <div className="">
       <div className="flex-1 box-border">
@@ -46,3 +59,11 @@ export default function HomePage() {
     </div>
   );
 }
+
+const BusSVG = styled(BusIcon)`
+  width: auto;
+  height: 1.2em;
+  path {
+    fill: #fefefe;
+  }
+`;
