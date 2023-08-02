@@ -37,23 +37,28 @@ export default function BusListPage() {
     }
   };
   const handleWordKeyClick = (e) => {
-    console.log(e.target.value);
     const value = e.target.value;
     setInputValue((prev) => prev + value);
   };
+
+  // const handleBusChange = () => {
+
+  // }
 
   useEffect(() => {
     const getBusCityAsync = async () => {
       try {
         const busCity = await getBusCity(city);
-        console.log(busCity);
+        // console.log(busCity);
+        setBusList(busCity);
       } catch (error) {
         console.error(error);
       }
     };
     getBusCityAsync();
   }, []);
-
+  // console.log(inputValue)
+  // console.log(busList)
   return (
     <div className="">
       <div className="flex-1 box-border">
@@ -68,13 +73,18 @@ export default function BusListPage() {
           </div>
         </Header>
         <MainArea height="h-[calc(100vh-172px)]">
-          <BusList inputValue={inputValue} />
+          <BusList
+            inputValue={inputValue}
+            // onBusChange={handleBusChange}
+            props={busList}
+          />
         </MainArea>
       </div>
       <div className="bg-light-biege px-2 py-4 z-[100]">
         <Keyboard
           onNumKeyClick={handleNumKeyClick}
           onWordKeyClick={handleWordKeyClick}
+          city={city}
         />
       </div>
     </div>

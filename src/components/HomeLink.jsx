@@ -75,7 +75,7 @@ export default function HomeLink() {
   const BtnDataList = BtnData.map((btn) => {
     return (
       <Link
-        to={`/list/${btn.linkTo}`}
+        to={`/${btn.linkTo}`}
         className={`flex justify-center items-center ${btn.color} block w-full min-h-[45px] rounded py-2 text-center drop-shadow-md hover:${btn.color_hover} hover:font-bold`}
       >
         <span>{btn.icon}</span>

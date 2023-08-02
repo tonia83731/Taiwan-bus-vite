@@ -4,7 +4,7 @@ const getAuthorizationHeader = async() => {
   const parameter = {
     grant_type: "client_credentials",
     client_id: "a83731americacowchang-8d4ab7ca-46d8-4406",
-    client_secret: "75ba32b8-e2f1-45a3-8923-22a46a0762c8",
+    client_secret: "73fe99ac-7cb7-4bc9-833b-9a10ce04a30e",
   };
 
   let auth_url =

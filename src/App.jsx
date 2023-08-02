@@ -16,10 +16,16 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<HomePage />} />
-            <Route path="/list/:name" element={<BusListPage />} />
-            <Route path="/info" element={<BusInfoPage />} />
-            <Route path="/route-info" element={<RouteInfoPage />} />
-            <Route path="/map" element={<RouteMapPage />} />
+            <Route path="/:name" element={<BusListPage />} />
+            <Route path="/:name/:route" element={<BusInfoPage />} />
+            <Route
+              path="/:name/:route/route-info"
+              element={<RouteInfoPage />}
+            />
+            <Route
+              path="/:name/:route/route-map/:stop"
+              element={<RouteMapPage />}
+            />
           </Routes>
         </BrowserRouter>
       </div>

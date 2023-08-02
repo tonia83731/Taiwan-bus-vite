@@ -2,11 +2,14 @@ import Header from "../components/Header";
 import MainArea from "../components/MainArea";
 
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { loadGoogleMapsAPI } from "google-maps-api-loader";
 
 export default function RouteMapPage() {
+  const name = useParams().name;
+  const route = useParams().route;
+  const stop = useParams().stop
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -14,11 +17,11 @@ export default function RouteMapPage() {
     <div className="">
       <Header>
         <div className="px-6 h-full grid gap-4 grid-cols-4 items-center relative">
-          <Link to="/">
+          <Link to={`/${name}/${route}`}>
             <div className="text-sm hover:font-bold">&#8249; 返回</div>
           </Link>
           <div className="font-bold col-span-3 text-lg absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            0南 路線圖
+            {route} {stop}站 位置圖
           </div>
         </div>
       </Header>

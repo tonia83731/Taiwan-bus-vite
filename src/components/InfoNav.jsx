@@ -1,4 +1,4 @@
-export default function InfoNav() {
+export default function InfoNav({route}) {
   return (
     <div className="sticky top-0">
       <div className="h-2 w-full bg-sky-blue"></div>
@@ -14,9 +14,9 @@ export default function InfoNav() {
           />
           <label
             for="outbound"
-            class="w-[50%] pb-1 peer-checked/outbound:text-blue-100 peer-checked/outbound:bg-white-100 peer-checked/outbound:rounded-t-lg"
+            class="w-[50%] pb-1 peer-checked/outbound:text-blue-100 peer-checked/outbound:bg-white-100 peer-checked/outbound:rounded-t-lg cursor-pointer"
           >
-            往 捷運東門站
+            往 {route.DestinationStopNameZh}
           </label>
 
           <input
@@ -28,9 +28,9 @@ export default function InfoNav() {
           />
           <label
             for="inbound"
-            class="w-[50%] pb-2 peer-checked/inbound:text-blue-100 peer-checked/inbound:bg-white-100 peer-checked/inbound:rounded-t-lg"
+            class="w-[50%] pb-2 peer-checked/inbound:text-blue-100 peer-checked/inbound:bg-white-100 peer-checked/inbound:rounded-t-lg cursor-pointer"
           >
-            往 萬芳社區
+            往 {route.DepartureStopNameZh}
           </label>
         </div>
       </div>

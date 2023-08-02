@@ -7,8 +7,12 @@ import InfoList from "../components/InfoList";
 import { ReactComponent as Info } from "../assets/Info.svg";
 import { ReactComponent as Refresh } from "../assets/Refresh.svg";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+
+import { getBusRoute } from "../api/getBusRoute";
+import { getBusStopOfRoute } from "../api/getDisplayStopOfRoute";
+import { useState, useEffect } from "react";
 
 const InfoSVG = styled(Info)`
   width: auto;
@@ -26,20 +30,54 @@ const RefreshSVG = styled(Refresh)`
 `;
 
 export default function BusInfoPage() {
+  const [busRouteArr, setBusRoute] = useState([])
+  const [busStopArr, setBusStop] = useState([])
+  const name = useParams().name
+  const route = useParams().route
+  // console.log(name)
+  const handleRefresh = () => {
+    window.location.reload()
+  }
+  useEffect(() => {
+    const getBustRouteAsync = async () => {
+      try {
+        const busRoute = await getBusRoute(name, route);
+        // console.log(busRoute)
+        setBusRoute([busRoute[0]])
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const getBusStopAsync = async () => {
+      try {
+        const busStopOfRoute = await getBusStopOfRoute(name, route);
+        // console.log(busStopOfRoute);
+        setBusStop([busStopOfRoute[0]])
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getBustRouteAsync();
+    getBusStopAsync();
+  }, [])
+  // console.log(busRouteArr)
+  // console.log(busStopArr);
   return (
     <div className="">
       <div className="flex-1 box-border">
         <Header>
           <div className="px-6 h-full flex justify-between items-center">
-            <Link to="">
-              <div className="text-sm hover:font-bold">&#8249; 返回路線列表</div>
+            <Link to={`/${name}`}>
+              <div className="text-sm hover:font-bold">
+                &#8249; 返回路線列表
+              </div>
             </Link>
-            <div className="font-bold text-lg">0南</div>
+            <div className="font-bold text-lg">{route}</div>
             <div className="flex items-center">
-              <Link to="">
+              <Link to={`/${name}/${route}/route-info`}>
                 <InfoSVG />
               </Link>
-              <button className="ml-4">
+              <button className="ml-4" onClick={handleRefresh}>
                 <RefreshSVG />
               </button>
             </div>
@@ -47,8 +85,14 @@ export default function BusInfoPage() {
         </Header>
         <MainArea height="h-[calc(100vh-60px)]">
           <div className="h-full overflow-y-scroll">
-            <InfoNav />
-            <InfoList />
+            {busRouteArr.map((route) => (
+              <InfoNav route={route} key={route.RouteUID} />
+            ))}
+            {/* <InfoList props={busStopArr}/> */}
+            {busStopArr.map((prop) => {
+              // console.log(prop.Stops)
+              return (<InfoList props={prop.Stops} />)
+            })}
           </div>
         </MainArea>
       </div>
