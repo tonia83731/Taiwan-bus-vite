@@ -1,4 +1,4 @@
-export default function InfoNav({route}) {
+export default function InfoNav({route, selectedOption, onNavChange}) {
   return (
     <div className="sticky top-0">
       <div className="h-2 w-full bg-sky-blue"></div>
@@ -10,7 +10,9 @@ export default function InfoNav({route}) {
             class="peer/outbound hidden"
             type="radio"
             name="round"
-            checked
+            onChange={onNavChange}
+            defaultChecked
+            // checked={selectedOption === "outbound"}
           />
           <label
             for="outbound"
@@ -25,6 +27,8 @@ export default function InfoNav({route}) {
             class="peer/inbound hidden"
             type="radio"
             name="round"
+            // checked={selectedOption === "inbound"}
+            onChange={onNavChange}
           />
           <label
             for="inbound"

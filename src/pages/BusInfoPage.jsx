@@ -32,11 +32,31 @@ const RefreshSVG = styled(Refresh)`
 export default function BusInfoPage() {
   const [busRouteArr, setBusRoute] = useState([])
   const [busStopArr, setBusStop] = useState([])
+  // const props = busStopArr.map((prop) => prop.Stops);
+  // const [stops, setStops] = useState([...props]);
+  const [selectedOption, setSelectedOption] = useState("")
   const name = useParams().name
   const route = useParams().route
   // console.log(name)
   const handleRefresh = () => {
     window.location.reload()
+  }
+
+  const handleNavChange = (e) => {
+    const value = e.target.value
+    console.log(value)
+    setSelectedOption(value)
+    // if(value === "inbound"){
+    //   const reverseProps = props.map((prop) => prop.reverse())
+    //   // const reverseProps = props.map((prop) => prop.StopID)
+    //   console.log(reverseProps)
+    //   setStops(reverseProps)
+    // } else {
+    //   const normalProps = props.map((prop) => prop)
+    //   console.log(normalProps)
+    //   setStops(normalProps);
+    // }
+    // setSelectedOption(e.target.value)
   }
   useEffect(() => {
     const getBustRouteAsync = async () => {
@@ -60,8 +80,6 @@ export default function BusInfoPage() {
     getBustRouteAsync();
     getBusStopAsync();
   }, [])
-  // console.log(busRouteArr)
-  // console.log(busStopArr);
   return (
     <div className="">
       <div className="flex-1 box-border">
@@ -77,7 +95,11 @@ export default function BusInfoPage() {
               <Link to={`/${name}/${route}/route-info`}>
                 <InfoSVG />
               </Link>
-              <button className="ml-4" onClick={handleRefresh}>
+              <button
+                className="ml-4"
+                onClick={handleRefresh}
+                selectedOption={selectedOption}
+              >
                 <RefreshSVG />
               </button>
             </div>
@@ -86,13 +108,18 @@ export default function BusInfoPage() {
         <MainArea height="h-[calc(100vh-60px)]">
           <div className="h-full overflow-y-scroll">
             {busRouteArr.map((route) => (
-              <InfoNav route={route} key={route.RouteUID} />
+              <InfoNav
+                route={route}
+                key={route.RouteUID}
+                onNavChange={handleNavChange}
+              />
             ))}
             {/* <InfoList props={busStopArr}/> */}
-            {busStopArr.map((prop) => {
+            {busStopArr.map((props) => {
               // console.log(prop.Stops)
-              return (<InfoList props={prop.Stops} />)
+              return (<InfoList props={props.Stops} selectedOption={selectedOption}/>)
             })}
+            {/* <InfoList props={stops} /> */}
           </div>
         </MainArea>
       </div>
