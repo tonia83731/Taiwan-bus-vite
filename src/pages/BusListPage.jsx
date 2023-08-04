@@ -11,6 +11,8 @@ import { useState, useEffect } from "react";
 export default function BusListPage() {
   const [inputValue, setInputValue] = useState("");
   const [busList, setBusList] = useState([])
+  const [filter, setFilter] = useState([])
+  const [isOpen, setIsOpen] = useState(false);
 
   const city = useParams().name;
   // console.log(city)
@@ -30,20 +32,71 @@ export default function BusListPage() {
 
   const handleNumKeyClick = (e) => {
     const value = e.target.value;
-    if (value !== "其他" && value !== "清除") {
+    if (value !== "←" && value !== "清除") {
       setInputValue((prev) => prev + value);
     } else if (value === "清除") {
       setInputValue("");
+      setFilter(busList)
+    } else if (value === "←"){
+      setInputValue((prev) => prev.slice(0, -1));
     }
   };
   const handleWordKeyClick = (e) => {
     const value = e.target.value;
-    setInputValue((prev) => prev + value);
+    if (value === "取消"){
+      setIsOpen(false);
+    } else {
+      setInputValue((prev) => prev + value);
+      if (
+        value === "通勤" ||
+        value === "內科" ||
+        value === "南軟" ||
+        value === "市民" ||
+        value === "貓空" ||
+        value === "兒樂" ||
+        value === "懷恩" ||
+        value === "景美" ||
+        value === "臺北觀光" ||
+        value === "大樹" ||
+        value === "大湖" ||
+        value === "大寮" ||
+        value === "永安" ||
+        value === "燕巢" ||
+        value === "雙層巴士" ||
+        value === "菱波官田線" ||
+        value === "山博行假日公車"
+      ) {
+        setIsOpen(false);
+      }
+    }
   };
+  const handleBusChange = (e) => {
+    const value = e.target.value
+    setInputValue(value)
+  }
+  const handleMoreOptionsClick = (e) => {
+    e.preventDefault()
+    setIsOpen(true)
+  }
+  const handleMoreOptionsClose = (e) => {
+    e.preventDefault()
+    setIsOpen(false)
+  }
 
-  // const handleBusChange = () => {
-
-  // }
+  const handleBusClick = (e) => {
+    e.preventDefault()
+    if(inputValue.length === 0) return
+    const filterList = busList.filter((route) => {
+      return route.RouteName.Zh_tw.includes(inputValue);
+    });
+    // console.log(filterList);
+    // setBusList(filterList)
+    setFilter(filterList)
+    setInputValue('')
+  }
+  const handleRefreshClick = () => {
+    // window.location.reload();
+  }
 
   useEffect(() => {
     const getBusCityAsync = async () => {
@@ -51,6 +104,7 @@ export default function BusListPage() {
         const busCity = await getBusCity(city);
         // console.log(busCity);
         setBusList(busCity);
+        setFilter(busCity)
       } catch (error) {
         console.error(error);
       }
@@ -59,6 +113,7 @@ export default function BusListPage() {
   }, []);
   // console.log(inputValue)
   // console.log(busList)
+  // console.log(filter)
   return (
     <div className="">
       <div className="flex-1 box-border">
@@ -75,8 +130,11 @@ export default function BusListPage() {
         <MainArea height="h-[calc(100vh-172px)]">
           <BusList
             inputValue={inputValue}
-            // onBusChange={handleBusChange}
-            props={busList}
+            onBusChange={handleBusChange}
+            onBusClick={handleBusClick}
+            onRefreshClick={handleRefreshClick}
+            props={filter}
+            cityName={city}
           />
         </MainArea>
       </div>
@@ -85,6 +143,9 @@ export default function BusListPage() {
           onNumKeyClick={handleNumKeyClick}
           onWordKeyClick={handleWordKeyClick}
           city={city}
+          onMoreOptionsClick={handleMoreOptionsClick}
+          onMoreOptionClose={handleMoreOptionsClose}
+          isOpen={isOpen}
         />
       </div>
     </div>

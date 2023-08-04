@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import MainArea from "../components/MainArea";
 
 import { useMemo } from "react";
@@ -8,30 +9,25 @@ import { loadGoogleMapsAPI } from "google-maps-api-loader";
 import { getBusStopOfRoute } from "../api/getDisplayStopOfRoute";
 import { useState, useEffect } from "react";
 
+const libraries = ["places"];
+
 export default function RouteMapPage() {
   const name = useParams().name;
   const route = useParams().route;
   const stop = useParams().stop
   const [busStop, setBusStop] = useState([])
-  const [busPosition, setBusPosition] = useState([])
+  const [theStops, setTheStops] = useState()
+  // const [busPosition, setBusPosition] = useState([])
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY,
+    libraries,
   });
-
-  const stopsArr = busStop.map((props) => {
-    return props.Stops
-  })
-  
-  // console.log(stopsArr)
-  
-  
 
   useEffect(() => {
     const getBustStopOfRouteAsync = async () => {
       try {
         const busStopOfRoute = await getBusStopOfRoute(name, route);
-        // console.log(busStopOfRoute);
-        setBusStop([busStopOfRoute[0]]);
+        setBusStop(busStopOfRoute[0]);
       } catch (error) {
         console.error(error);
       }
@@ -40,7 +36,8 @@ export default function RouteMapPage() {
     getBustStopOfRouteAsync();
   }, []);
 
-  // console.log(busStop)
+  // console.log(busStop.Stops)
+  if (!isLoaded) return <div>Loading...</div>;
   return (
     <div className="">
       <Header>
@@ -53,18 +50,29 @@ export default function RouteMapPage() {
           </div>
         </div>
       </Header>
+      {/* {allStops.map((prop) => {
+        return <Map props={prop} />;
+      })} */}
       {/* Google Map Here */}
-      <MainArea>{isLoaded ? <Map /> : <div>Loading...</div>}</MainArea>
+      {/* {MapArr} */}
+      <Map />
+      <Footer>
+        &#169;2023 -
+        <a href="https://data.gov.tw/" className="hover:underline">
+          DATA.GOV.TW
+        </a>
+        - All Rights Reserved
+      </Footer>
     </div>
   );
 }
 
-function Map() {
+function Map({props}) {
   const center = useMemo(() => ({
     lat: 25.033671,
     lng: 121.564427,
   }));
-
+  
 
   return (
     <GoogleMap

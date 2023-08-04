@@ -25,15 +25,19 @@ const newTaipeiBtn = [
     textColor: "text-brown-100",
   },
   {
+    id: "F",
+    name: "F(新巴士)",
+    textColor: "",
+  },
+  {
     id: "安坑",
     name: "安坑",
     textColor: "",
   },
   {
-    id: "F",
-    name: "F(新巴士)",
+    id: "湯泉",
+    name: "湯泉",
     textColor: "",
-    gridSpan: "col-span-2",
   },
 ];
 
@@ -47,9 +51,7 @@ export default function NewTaipeiKeyboard({onWordKeyClick}) {
         value={btn.id}
         className={`w-full h-full rounded bg-white-80 ${
           btn.textColor || "text-black-80"
-        } drop-shadow-md cursor-pointer hover:bg-white-100 text-sm ${
-          btn.gridSpan || ""
-        }`}
+        } drop-shadow-md cursor-pointer hover:bg-white-100 text-sm`}
         onClick={onWordKeyClick}
       />
     );

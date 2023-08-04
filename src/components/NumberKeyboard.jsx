@@ -1,5 +1,5 @@
 
-const numBtn = [1, 2, 3, 4, 5, 6, 7, 8, 9, "其他", 0, "清除"]
+const numBtn = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "清除", "←"];
 
 export default function NumberKeyboard({onNumKeyClick}){
   const numBtnGrid = numBtn.map((btn) => {
