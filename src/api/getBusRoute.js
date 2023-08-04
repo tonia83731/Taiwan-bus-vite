@@ -2,7 +2,8 @@ import axios from "axios";
 import getAuthorizationHeader from "./getAuthorizationHeader1";
 
 // public test: https://ptx.transportdata.tw/MOTC
-const baseUrl = "https://tdx.transportdata.tw/api/basic";
+// https://tdx.transportdata.tw/api/basic
+const baseUrl = "https://ptx.transportdata.tw/MOTC";
 const routeUrl = "v2/Bus/Route/City";
 const formatUrl = "?&$format=JSON";
 

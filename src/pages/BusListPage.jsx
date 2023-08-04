@@ -34,11 +34,19 @@ export default function BusListPage() {
     const value = e.target.value;
     if (value !== "←" && value !== "清除") {
       setInputValue((prev) => prev + value);
+      const filterList = busList.filter((route) => {
+        return route.RouteName.Zh_tw.includes(inputValue + value);
+      });
+      setFilter(filterList);
     } else if (value === "清除") {
       setInputValue("");
       setFilter(busList)
     } else if (value === "←"){
       setInputValue((prev) => prev.slice(0, -1));
+      const filterList = busList.filter((route) => {
+        return route.RouteName.Zh_tw.includes(inputValue.slice(0, -1));
+      });
+      setFilter(filterList);
     }
   };
   const handleWordKeyClick = (e) => {
@@ -68,11 +76,21 @@ export default function BusListPage() {
       ) {
         setIsOpen(false);
       }
+      const filterList = busList.filter((route) => {
+        return route.RouteName.Zh_tw.includes(inputValue + value);
+      });
+      setFilter(filterList);
     }
   };
   const handleBusChange = (e) => {
     const value = e.target.value
     setInputValue(value)
+    // console.log(value)
+    const filterList = busList.filter((route) => {
+      return route.RouteName.Zh_tw.includes(value);
+    });
+    setFilter(filterList);
+    // console.log(filterList)
   }
   const handleMoreOptionsClick = (e) => {
     e.preventDefault()
@@ -83,20 +101,20 @@ export default function BusListPage() {
     setIsOpen(false)
   }
 
-  const handleBusClick = (e) => {
-    e.preventDefault()
-    if(inputValue.length === 0) return
-    const filterList = busList.filter((route) => {
-      return route.RouteName.Zh_tw.includes(inputValue);
-    });
-    // console.log(filterList);
-    // setBusList(filterList)
-    setFilter(filterList)
-    setInputValue('')
-  }
-  const handleRefreshClick = () => {
-    // window.location.reload();
-  }
+  // const handleBusClick = (e) => {
+  //   e.preventDefault()
+  //   if(inputValue.length === 0) return
+  //   const filterList = busList.filter((route) => {
+  //     return route.RouteName.Zh_tw.includes(inputValue);
+  //   });
+  //   // console.log(filterList);
+  //   // setBusList(filterList)
+  //   setFilter(filterList)
+  //   setInputValue('')
+  // }
+  // const handleRefreshClick = () => {
+  //   // window.location.reload();
+  // }
 
   useEffect(() => {
     const getBusCityAsync = async () => {
@@ -131,8 +149,8 @@ export default function BusListPage() {
           <BusList
             inputValue={inputValue}
             onBusChange={handleBusChange}
-            onBusClick={handleBusClick}
-            onRefreshClick={handleRefreshClick}
+            // onBusClick={handleBusClick}
+            // onRefreshClick={handleRefreshClick}
             props={filter}
             cityName={city}
           />
