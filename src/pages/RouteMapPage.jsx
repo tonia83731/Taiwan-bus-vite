@@ -9,14 +9,18 @@ import { loadGoogleMapsAPI } from "google-maps-api-loader";
 import { getBusStopOfRoute } from "../api/getDisplayStopOfRoute";
 import { useState, useEffect } from "react";
 
+// import { ReactComponent as People } from "../assets/people.svg";
+import People from "../assets/people.png";
 const libraries = ["places"];
 
 export default function RouteMapPage() {
   const name = useParams().name;
   const route = useParams().route;
-  const stop = useParams().stop
-  const [busStop, setBusStop] = useState([])
-  const [theStops, setTheStops] = useState()
+  const stop = useParams().stop;
+  const [busStop, setBusStop] = useState([]);
+  const [theStops, setTheStops] = useState();
+  const [currentPosition, setCurrentPosition] = useState(null)
+  const [showPosition, setShowPosition] = useState(false)
   // const [busPosition, setBusPosition] = useState([])
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY,
@@ -32,9 +36,22 @@ export default function RouteMapPage() {
         console.error(error);
       }
     };
-   
+
     getBustStopOfRouteAsync();
   }, []);
+
+  const handleCurrentPositionClick = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+        setCurrentPosition(userPosition)
+        setShowPosition(true)
+      }
+    )
+  }
 
   // console.log(busStop.Stops)
   if (!isLoaded) return <div>Loading...</div>;
@@ -55,7 +72,7 @@ export default function RouteMapPage() {
       })} */}
       {/* Google Map Here */}
       {/* {MapArr} */}
-      <Map />
+      <Map onCurrentPositionClick={handleCurrentPositionClick} showPosition={showPosition} currentPosition={currentPosition}/>
       <Footer>
         &#169;2023 -
         <a href="https://data.gov.tw/" className="hover:underline">
@@ -67,23 +84,50 @@ export default function RouteMapPage() {
   );
 }
 
-function Map({props}) {
+function Map({ props, onCurrentPositionClick, showPosition, currentPosition }) {
   const center = useMemo(() => ({
     lat: 25.033671,
     lng: 121.564427,
   }));
-  
+  const options = useMemo(
+    () => ({
+      mapId: "1929e1c5753838e4",
+      disabledDefaultUI: true,
+      clickableIcons: false,
+    }),
+    []
+  );
 
   return (
     <GoogleMap
       zoom={15}
       center={center}
-      mapContainerClassName="w-full h-[calc(100vh-45px)]"
+      mapContainerClassName="w-full h-[calc(100vh-45px)] relative"
+      options={options}
     >
-      <MarkerF position={{
-        lat: 25.033671,
-        lng: 121.564427,
-      }}/>
+      <MarkerF
+        position={{
+          lat: 25.033671,
+          lng: 121.564427,
+        }}
+      />
+      {showPosition && (
+        <MarkerF
+          position={currentPosition}
+          icon={{
+            url: People,
+            scaledSize: new window.google.maps.Size(23, 30),
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(5, 5),
+          }}
+        />
+      )}
+      <button
+        className="absolute top-[80px] left-3 bg-green-100 rounded text-white-100 p-2 hover:drop-shadow-lg hover:font-bold"
+        onClick={onCurrentPositionClick}
+      >
+        目前位置
+      </button>
     </GoogleMap>
   );
 }
